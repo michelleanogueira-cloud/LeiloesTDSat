@@ -1,0 +1,15 @@
+# Arquivos gerados pelo NetBeans/Ant
+build/
+dist/
+
+# Configuracoes locais da IDE
+nbproject/private/
+
+# Dependencias binarias locais
+*.jar
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+
