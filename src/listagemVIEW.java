@@ -18,6 +18,7 @@ public class listagemVIEW extends javax.swing.JFrame {
      */
     public listagemVIEW() {
         initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         listarProdutos();
     }
 
@@ -136,17 +137,44 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        String id = id_produto_venda.getText();
-        
-        ProdutosDAO produtosdao = new ProdutosDAO();
-        
-        //produtosdao.venderProduto(Integer.parseInt(id));
-        listarProdutos();
+        String idDigitado = id_produto_venda.getText().trim();
+
+        if (idDigitado.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Informe o ID do produto que será vendido.",
+                    "Campo obrigatório",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            int id = Integer.parseInt(idDigitado);
+            ProdutosDAO produtosdao = new ProdutosDAO();
+
+            if (produtosdao.venderProduto(id)) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Produto vendido com sucesso.",
+                        "Venda registrada",
+                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                id_produto_venda.setText("");
+                listarProdutos();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Produto não encontrado ou venda não realizada.",
+                        "Venda não registrada",
+                        javax.swing.JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (NumberFormatException erro) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Digite um ID numérico válido.",
+                    "ID inválido",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
-        //vendasVIEW vendas = new vendasVIEW(); 
-        //vendas.setVisible(true);
+        vendasVIEW vendas = new vendasVIEW();
+        vendas.setVisible(true);
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -219,8 +247,11 @@ public class listagemVIEW extends javax.swing.JFrame {
                 });
             }
         } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Não foi possível carregar a lista de produtos.",
+                    "Erro na listagem",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     
     }
 }
-
