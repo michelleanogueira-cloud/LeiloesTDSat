@@ -18,6 +18,7 @@ public class listagemVIEW extends javax.swing.JFrame {
      */
     public listagemVIEW() {
         initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         listarProdutos();
     }
 
@@ -219,8 +220,11 @@ public class listagemVIEW extends javax.swing.JFrame {
                 });
             }
         } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Não foi possível carregar a lista de produtos.",
+                    "Erro na listagem",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     
     }
 }
-
